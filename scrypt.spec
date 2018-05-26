@@ -1,8 +1,3 @@
-%if 0%{?qubes_builder}
-%define _sourcedir %(pwd)
-%define _builddir %(pwd)
-%endif
-
 Name:		scrypt
 Version:	1.2.1
 Release:	1%{?dist}
