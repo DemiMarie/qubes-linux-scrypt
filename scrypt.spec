@@ -9,6 +9,7 @@ URL:		https://www.tarsnap.com/scrypt.html
 Source0:	https://www.tarsnap.com/scrypt/scrypt-%{version}.tgz
 Source1:	https://www.tarsnap.com/scrypt/scrypt-sigs-%{version}.asc
 
+BuildRequires:	gcc
 BuildRequires:	openssl-devel
 #Requires:	
 
