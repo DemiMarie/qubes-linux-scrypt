@@ -1,6 +1,6 @@
 Name:		scrypt
 Version:	1.2.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A simple password-based encryption utility
 
 Group:		System Environment/Base
