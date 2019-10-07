@@ -67,6 +67,7 @@ $(SIG_FILE): $(keyring-file)
 
 # just drop signature, don't rely on gpg for its verification - use gpgv above for it
 $(basename $(SIG_FILE)): $(SIG_FILE)
+	@rm -f "$@"
 	@gpg --batch --keyring $(keyring) -o $@ $< 2>/dev/null
 
 $(SRC_FILE): $(basename $(SIG_FILE)) $(keyring-file)
