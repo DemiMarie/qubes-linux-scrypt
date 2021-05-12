@@ -13,7 +13,6 @@ BUILDDIR ?= $(WORKDIR)
 RPMDIR ?= $(WORKDIR)/rpm
 SOURCEDIR := $(WORKDIR)
 
-
 RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
                --define "_specdir $(SPECDIR)" \
                --define "_builddir $(BUILDDIR)" \
@@ -42,6 +41,8 @@ ifdef SIG_URL
 endif
 endif
 
+fetch = $(or $(FETCH_CMD),$(error Cannot fetch sources without $$(FETCH_CMD) set))
+
 get-sources: $(SRC_FILE)
 
 keyring := scrypt-trustedkeys.gpg
@@ -60,7 +61,7 @@ verify-sources:
 UNTRUSTED_SUFF := .untrusted
 
 $(SIG_FILE): $(keyring-file)
-	@wget --no-use-server-timestamps -q -O $@$(UNTRUSTED_SUFF) $(SIG_URL)
+	@$(fetch) $@$(UNTRUSTED_SUFF) -- $(SIG_URL)
 	@gpgv --keyring $(keyring) $@$(UNTRUSTED_SUFF) 2>/dev/null || \
         { echo "Wrong signature on $@$(UNTRUSTED_SUFF)!"; exit 1; }
 	@mv -f $@$(UNTRUSTED_SUFF) $@
@@ -71,8 +72,12 @@ $(basename $(SIG_FILE)): $(SIG_FILE)
 	@gpg --batch --keyring $(keyring) -o $@ $< 2>/dev/null
 
 $(SRC_FILE): $(basename $(SIG_FILE)) $(keyring-file)
-	@wget --no-use-server-timestamps -q -O $@ $(URL)
-	@sha256sum --quiet -c $< || rm -f $@
+	@mkdir downloads.UNTRUSTED && \
+	trap 'rm -rf -- downloads.UNTRUSTED' EXIT && \
+	$(fetch) downloads.UNTRUSTED/$@ -- $(URL) && \
+	cp $< downloads.UNTRUSTED/$< && \
+	(cd downloads.UNTRUSTED && exec sha256sum --quiet --strict -c $<) && \
+	mv downloads.UNTRUSTED/$@ .
 
 
 .PHONY: clean-sources
