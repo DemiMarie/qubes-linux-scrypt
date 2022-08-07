@@ -1,6 +1,6 @@
-SPECFILE := scrypt.spec
-URL := $(shell spectool $(RPM_DEFINES) --list-files --source 0 $(SPECFILE) 2> /dev/null| cut -d ' ' -f 2- )
-SIG_URL := $(shell spectool $(RPM_DEFINES) --list-files --source 1 $(SPECFILE) 2> /dev/null| cut -d ' ' -f 2- )
+VERSION := $(shell cat version)
+URL := https://www.tarsnap.com/scrypt/scrypt-$(VERSION).tgz
+SIG_URL := https://www.tarsnap.com/scrypt/scrypt-sigs-$(VERSION).asc
 ifndef SRC_FILE
 ifdef URL
 	SRC_FILE := $(notdir $(URL))
