@@ -1,0 +1,12 @@
+host:
+  rpm:
+    spec:
+    - scrypt.spec
+vm:
+  rpm:
+    spec:
+    - scrypt.spec
+source:
+  files:
+  - url: https://www.tarsnap.com/scrypt/scrypt-@VERSION@.tgz
+    sha256: scrypt-@VERSION@.tgz.sha256
