@@ -1,6 +1,6 @@
 Name:		scrypt
-Version:	1.2.1
-Release:	3%{?dist}
+Version:	@VERSION@
+Release:	@REL@%{?dist}
 Summary:	A simple password-based encryption utility
 
 Group:		System Environment/Base
@@ -39,4 +39,4 @@ make %{?_smp_mflags}
 /usr/share/man/man1/scrypt.1.gz
 
 %changelog
-
+@CHANGELOG@
