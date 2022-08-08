@@ -1,4 +1,4 @@
-VERSION := $(shell cat version)
+VERSION := $(or $(file <version),$(error Cannot determine version))
 URL := https://www.tarsnap.com/scrypt/scrypt-$(VERSION).tgz
 SIG_URL := https://www.tarsnap.com/scrypt/scrypt-sigs-$(VERSION).asc
 ifndef SRC_FILE
