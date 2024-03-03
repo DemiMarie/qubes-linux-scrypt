@@ -1,10 +1,10 @@
 host:
   rpm:
-    spec:
+    build:
     - scrypt.spec
 vm:
   rpm:
-    spec:
+    build:
     - scrypt.spec
 source:
   files:
